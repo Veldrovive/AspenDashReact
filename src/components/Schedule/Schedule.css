@@ -1,0 +1,28 @@
+.block-container{
+  font-size: 1.3em;
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 15px;
+  border-right: solid #f2dede thin;
+  border-bottom: solid #f2dede thin;
+}
+
+.block-container:nth-child(6) {
+  border-right: none;
+}
+
+.schedule-panel{
+  display: flex;
+  flex-direction: row;
+}
+
+.panel-body{
+  padding: 0 !important;
+}
+
+.progress{
+  margin: 0 !important;
+  border-radius: 0 !important;
+}

@@ -1,0 +1,11 @@
+#mHeader {
+  font-family: 'Freshman', sans-serif;
+}
+
+#mHeader:hover {
+  color: #9e0b0f;
+}
+
+.glyphicon.spinning {
+  animation: spin 1s infinite linear;
+}
