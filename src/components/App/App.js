@@ -1,6 +1,5 @@
 // src/components/App/index.js
 import React, { Component } from 'react';
-//import rp from 'request-promise';
 import request from 'request';
 import { Row } from 'react-bootstrap';
 
@@ -35,39 +34,6 @@ class App extends Component {
 
   componentDidMount(){
     this.getDisplayExceptions();
-  }
-
-  checkDayPercentage(){
-    /*let start = new Date().setHours(7, 45);
-    let oneEnd = new Date().setHours(8, 42);
-    let twoStart = new Date().setHours(8, 45);
-    let twoEnd = new Date().setHours(9, 37);
-    let advStart = new Date().setHours(9, 40);
-    let advEnd = new Date().setHours(10, 10);
-    let threeStart = new Date().setHours(10, 13);
-    let threeEnd = new Date().setHours(11, 5);
-    let fourStart = new Date().setHours(11, 5);
-    let fourEnd = new Date().setHours(12, 24);
-    let fiveStart = new Date().setHours(12, 27);
-    let fiveEnd = new Date().setHours(13, 17);
-    let sixStart = new Date().setHours(13, 20);
-    let end = new Date().setHours(14, 11);
-
-    const totalTime = end-start;
-    console.log("One end through day: ",((oneEnd-start)/totalTime)*100);
-    console.log("Two start through day: ",((twoStart-start)/totalTime)*100);
-    console.log("Two end through day: ",((twoEnd-start)/totalTime)*100);
-    console.log("Adv start through day: ",((advStart-start)/totalTime)*100);
-    console.log("Adv end through day: ",((advEnd-start)/totalTime)*100);
-    console.log("Three start through day: ",((threeStart-start)/totalTime)*100);
-    console.log("Three end through day: ",((threeEnd-start)/totalTime)*100);
-    console.log("Four start through day: ",((fourStart-start)/totalTime)*100);
-    console.log("Four end through day: ",((fourEnd-start)/totalTime)*100);
-    console.log("Five start through day: ",((fiveStart-start)/totalTime)*100);
-    console.log("Five end through day: ",((fiveEnd-start)/totalTime)*100);
-    console.log("Six start through day: ",((sixStart-start)/totalTime)*100);
-    console.log("Six end through day: ",((end-start)/totalTime)*100);
-    console.log("Current percent through day: ",((new Date()-start)/totalTime)*100)*/
   }
 
   getDisplayExceptions(){

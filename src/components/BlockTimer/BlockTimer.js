@@ -92,10 +92,9 @@ const thursdayAdvisoryClasses = [
 ];
 
 
-
 export default class BlockTimer extends Component{
   constructor(){
-    super()
+    super();
     this.state = {currentPercent: 0, nextPercent: 0, nextEvent: '', timer: 0};
     this.startLoop = this.startLoop.bind(this);
     this.startTimer = this.startTimer.bind(this);
