@@ -102,12 +102,12 @@ class App extends Component {
   render() {
     let colDisplayed = 0;
     let size;
-    this.state.displayExceptions.dayTimer ? colDisplayed++ : colDisplayed;
-    this.state.displayExceptions.blockTimer ? colDisplayed++ : colDisplayed;
-    this.state.displayExceptions.lunch ? colDisplayed++ : colDisplayed;
-    colDisplayed === 1 ? size = 12 : size;
-    colDisplayed === 2 ? size = 6 : size;
-    colDisplayed === 3 ? size = 4 : size;
+    if(this.state.displayExceptions.dayTimer) colDisplayed++;
+    if(this.state.displayExceptions.blockTimer) colDisplayed++;
+    if(this.state.displayExceptions.lunch) colDisplayed++;
+    if(colDisplayed === 1) size = 12;
+    if(colDisplayed === 2) size = 6;
+    if(colDisplayed === 3) size = 4;
     return (
       <div className="main-container">
         <Header setDisplay={this.toggleDisplayException}/>
