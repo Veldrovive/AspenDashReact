@@ -33,6 +33,8 @@ const tuesdayAdvisoryClasses = [
   'Six End',
 ];
 
+//TODO: Second Lunch 11:20
+//TODO: Third Lunch 11:51
 const regularDayPercents = [
   16.06217616580311,
   16.83937823834197,
@@ -95,7 +97,7 @@ const thursdayAdvisoryClasses = [
 export default class BlockTimer extends Component{
   constructor(){
     super();
-    this.state = {currentPercent: 0, nextPercent: 0, nextEvent: '', timer: 0};
+    this.state = {currentPercent: 0, nextPercent: 0, nextEvent: '', timer: 0, intervalIndex: 0};
     this.startLoop = this.startLoop.bind(this);
     this.startTimer = this.startTimer.bind(this);
   }
@@ -104,12 +106,15 @@ export default class BlockTimer extends Component{
     this.startLoop();
   }
 
+  componentWillUnmount(){
+    clearInterval(this.state.intervalIndex);
+  }
+
   startLoop(){
     const currentWeekDay = new Date().getDay();
     const currentPercent = ((new Date() - new Date().setHours(7, 45, 0, 0)) / (new Date().setHours(14, 11, 0, 0) - new Date().setHours(7, 45))) * 100;
     let nextEvent;
     let nextPercent;
-    console.log("Current Day: ",currentWeekDay," Current Percent: ",currentPercent);
     if(currentWeekDay === 2) {
       const blockNumber = tuesdayAdvisoryPercents.getNumberIndex(currentPercent);
       if(blockNumber !== false) {
@@ -138,8 +143,6 @@ export default class BlockTimer extends Component{
         nextPercent = 100;
       }
     }
-    console.log("Next Event: ",nextEvent," Next Event Percent: ",nextPercent);
-    console.log("State Percent: ",this.state.nextPercent," Function Percent: ",nextPercent);
     if(nextPercent !== this.state.nextPercent) {
       this.setState({
         currentPercent: currentPercent,
@@ -156,13 +159,14 @@ export default class BlockTimer extends Component{
     const timeDiff = (diff/100)*dayTime;
     this.setState({timer: timeDiff});
     const interval = setInterval(() => {
-      this.setState({timer: this.state.timer - 1})
+      this.setState({timer: this.state.timer - 1});
       if(this.state.timer < 0){
         clearInterval(interval);
         this.startLoop();
       }
       //TODO: Check to make sure this works.
     }, 1000);
+    this.setState({intervalIndex: interval});
   }
 
   timeToString(time){
@@ -187,7 +191,7 @@ export default class BlockTimer extends Component{
 
   render(){
     return(
-      <Col sm={4}>
+      <Col sm={this.props.size}>
         <Panel bsStyle="danger" header={this.state.nextEvent} className="block-timer-panel">
           {this.timeToString(Math.round(this.state.timer))}
         </Panel>

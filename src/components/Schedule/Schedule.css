@@ -13,6 +13,12 @@
   border-right: none;
 }
 
+.block-container:nth-child(4)::before{
+  content: "\f0f5";
+  margin-right: .3em;
+  font-family: FontAwesome;
+}
+
 .schedule-panel{
   display: flex;
   flex-direction: row;
@@ -25,4 +31,16 @@
 .progress{
   margin: 0 !important;
   border-radius: 0 !important;
+  font-size: 1em !important;
+}
+
+@media only screen and (max-width: 500px) {
+  .progress{
+    font-size: 1em !important;
+  }
+
+  .block-container{
+    font-size: .8em;
+    padding: 8px 10px 8px 10px;
+  }
 }

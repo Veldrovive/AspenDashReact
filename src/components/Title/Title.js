@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
 import { PageHeader } from 'react-bootstrap';
+import moment from 'moment';
 
 import './Title.css'
 
 export default class Title extends Component{
   render(){
+    let m;
+    if(this.props.asOf !== 0) {
+      const date = new Date(this.props.asOf * 1000);
+      m = moment(date).format('h:mm:ss a');
+    }else{
+      m = "Loading";
+    }
     return(
-      <PageHeader>Day {this.props.dayNumber} Information <small className="smallText">Last Updated: {new Date().getTime()}</small></PageHeader>
+      <PageHeader>Day {this.props.dayNumber} Information <small className="smallText">{m}</small></PageHeader>
     )
   }
 }

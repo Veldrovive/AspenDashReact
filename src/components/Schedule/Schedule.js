@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Panel, ProgressBar } from 'react-bootstrap'
-import FontAwesome from 'react-fontawesome'
 
 import './Schedule.css';
 
@@ -36,9 +35,7 @@ export default class Schedule extends Component{
       let blocks = [];
       let counter = 0;
       blockArray.forEach((block) => {
-        if(counter === 3){
-          blocks.push(<div key={counter} className='block-container'><FontAwesome name="cutlery" />{block}</div>);
-        }else if (block === currentBlock) {
+        if (block === currentBlock) {
           blocks.push(<div key={counter} className='block-container' style={{fontWeight:"Bolder", backgroundColor: "#fee9e9"}}>{block}</div>);
         } else {
           blocks.push(<div key={counter} className='block-container'>{block}</div>);
@@ -47,7 +44,7 @@ export default class Schedule extends Component{
       });
       this.setState({blocks: blocks});
     }else{
-      this.setState({blocks: <p>Failed To Fetch Schedule</p>})
+      this.setState({blocks: <div></div>})
     }
   }
 
@@ -58,7 +55,7 @@ export default class Schedule extends Component{
     this.setState({percent: startPercent});
     const interval = setInterval(() => {
       this.setState({percent: (new Date()-start)/(end - start)*100});
-    }, 1000)
+    }, 1000);
     this.setState({intervalId: interval});
   }
 

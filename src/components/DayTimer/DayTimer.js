@@ -5,12 +5,16 @@ import './DayTimer.css';
 export default class DayTimer extends Component{
   constructor(){
     super();
-    this.state = {time: 0};
+    this.state = {time: 0, intervalIndex: 0};
     this.getTimeTillEnd = this.getTimeTillEnd.bind(this);
   }
 
   componentDidMount(){
     this.getTimeTillEnd();
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.state.intervalIndex);
   }
 
   timeToString(time){
@@ -43,18 +47,19 @@ export default class DayTimer extends Component{
       timeTillEnd = 0;
     }
     this.setState({time: timeTillEnd});
-    setInterval(() => {
+    const interval = setInterval(() => {
       if(this.state.time > 0) {
         this.setState({time: this.state.time - 1});
       }else{
         this.setState({time: "School Out"});
       }
     }, 1000)
+    this.setState({intervalIndex: interval});
   }
 
   render(){
     return(
-      <Col sm={4}>
+      <Col sm={this.props.size}>
         <Panel bsStyle="danger" header="End of Day" className="day-timer-panel">
           {this.timeToString(this.state.time)}
         </Panel>

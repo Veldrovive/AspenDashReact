@@ -18,7 +18,6 @@ export default class Lunch extends Component{
     request.get('https://melroseschools.nutrislice.com/menu/api/weeks/school/melrose/menu-type/lunch/'+new Date().getFullYear()+'/00/00/?format=json', (err, res, body) => {
       body = JSON.parse(body);
       const lunch = body.days[new Date().getDay()].menu_items[1].food.name;
-      console.log("Response: ",body," Lunch: ",lunch);
       if(typeof lunch !== 'undefined'){
         this.setState({special: lunch});
       }else{
@@ -28,8 +27,11 @@ export default class Lunch extends Component{
   }
 
   render(){
+    //3: 4
+    //1: 12
+    //2: 6
     return(
-      <Col sm={4}>
+      <Col sm={this.props.size}>
         <Panel bsStyle="danger" header="Lunch Special" className="lunch-panel">
           {this.state.special}
         </Panel>

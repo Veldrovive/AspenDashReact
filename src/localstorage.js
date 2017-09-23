@@ -13,7 +13,6 @@ export const loadState = () => {
 
 export const saveState = (state) => {
   try{
-    console.log("Saving: ",state);
     //State is saved as a string so it has to be stringified
     const serializedState = JSON.stringify(state);
     localStorage.setItem('aspenDash', serializedState)

@@ -21,15 +21,15 @@ class App extends Component {
   // state = {}
   constructor(props){
     super(props);
-    this.state = {schedule: null, currentBlock: null, dayNumber: null, displayExceptions: {}};
+    this.state = {schedule: null, currentBlock: null, dayNumber: null, asOf: 0, displayExceptions: {}};
     this.getAspenInfo()
       .then(res => {
-        console.log(res);
-        this.setState({schedule: res.schedule.blockSchedule, currentBlock: res.schedule.block, dayNumber: res.schedule.day, announcements: res.announcements.hs})
+        this.setState({asOf: res.asOf, schedule: res.schedule.blockSchedule, currentBlock: res.schedule.block, dayNumber: res.schedule.day, announcements: res.announcements.hs})
       });
     this.getDisplayExceptions = this.getDisplayExceptions.bind(this);
     this.setDisplayException = this.setDisplayException.bind(this);
     this.toggleDisplayException = this.toggleDisplayException.bind(this);
+    this.getQueryStringOverrides = this.getQueryStringOverrides.bind(this);
   }
 
   componentDidMount(){
@@ -38,25 +38,42 @@ class App extends Component {
 
   getDisplayExceptions(){
     const loadedState = loadState();
-    console.log("State: ",loadedState);
     if(typeof loadedState === 'object') {
       this.setState({displayExceptions: loadedState});
-      console.log("Current Component State: ",this.state);
     }else{
       let defaultDisplay = {pageTitle: true, schedule: true, dayTimer: true, blockTimer: true, lunch: true, announcements: true};
       this.setState({displayExceptions: defaultDisplay});
-      console.log("Display Exceptions: ",defaultDisplay);
       saveState(defaultDisplay);
-      console.log("Current Component State: ",this.state);
     }
+    setTimeout(this.getQueryStringOverrides(), 1000);
   }
 
   setDisplayException(id, value){
     let newExceptions = this.state.displayExceptions;
-    console.log("Setting object: ",id," to ",value);
     newExceptions[id] = value;
     this.setState({displayExceptions: newExceptions});
     saveState(this.state.displayExceptions);
+  }
+
+  getQueryStringOverrides(){
+    function getParameterByName(name, url) {
+      if (!url) url = window.location.href;
+      name = name.replace(/[\[\]]/g, "\\$&");
+      let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return '';
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    console.log("The value of hideSchedule is: ",getParameterByName('hideSchedule'));
+
+    if(getParameterByName('hideSchedule') === 'true'){
+      let newExceptions = this.state.displayExceptions;
+      newExceptions.schedule = false;
+      console.log("Setting exceptions to: ",newExceptions);
+      this.setState({displayExceptions: newExceptions});
+    }
   }
 
   toggleDisplayException(id){
@@ -83,13 +100,20 @@ class App extends Component {
   }
 
   render() {
-    this.checkDayPercentage();
+    let colDisplayed = 0;
+    let size;
+    this.state.displayExceptions.dayTimer ? colDisplayed++ : colDisplayed;
+    this.state.displayExceptions.blockTimer ? colDisplayed++ : colDisplayed;
+    this.state.displayExceptions.lunch ? colDisplayed++ : colDisplayed;
+    colDisplayed === 1 ? size = 12 : size;
+    colDisplayed === 2 ? size = 6 : size;
+    colDisplayed === 3 ? size = 4 : size;
     return (
       <div className="main-container">
         <Header setDisplay={this.toggleDisplayException}/>
         <div className="mainInfoWrapper">
           {this.state.displayExceptions.pageTitle ?
-            <PageTitle dayNumber={this.state.dayNumber}/>
+            <PageTitle dayNumber={this.state.dayNumber} asOf={this.state.asOf}/>
             :
             <div/>
           }
@@ -100,17 +124,17 @@ class App extends Component {
           }
           <Row>
             {this.state.displayExceptions.dayTimer ?
-              <DayTimer isHalfDay={false}/>
+              <DayTimer size={size} isHalfDay={false}/>
               :
               <div/>
             }
             {this.state.displayExceptions.blockTimer ?
-              <BlockTimer/>
+              <BlockTimer size={size}/>
               :
               <div/>
             }
             {this.state.displayExceptions.lunch ?
-              <Lunch/>
+              <Lunch size={size}/>
               :
               <div/>
             }

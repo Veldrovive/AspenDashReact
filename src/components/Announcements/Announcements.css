@@ -72,3 +72,15 @@
 .announcement-button:hover{
   background-color: #f2d9d9;
 }
+
+@media only screen and (max-width: 500px) {
+  .announcements-buttons-container{
+    border-top: 1px solid #f2c3c9;
+    border-left: 0;
+    min-width: 30%;
+  }
+
+  .announcement-button{
+    padding: 10px 0 10px 0;
+  }
+}
