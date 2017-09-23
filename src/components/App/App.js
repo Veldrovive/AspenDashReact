@@ -110,7 +110,7 @@ class App extends Component {
     if(colDisplayed === 3) size = 4;
     return (
       <div className="main-container">
-        <Header setDisplay={this.toggleDisplayException}/>
+        <Header setDisplay={this.toggleDisplayException} exceptions={this.state.displayExceptions}/>
         <div className="mainInfoWrapper">
           {this.state.displayExceptions.pageTitle ?
             <PageTitle dayNumber={this.state.dayNumber} asOf={this.state.asOf}/>

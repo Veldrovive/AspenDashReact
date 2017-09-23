@@ -2,6 +2,11 @@
   font-family: 'Freshman', sans-serif;
 }
 
+.header-check-box{
+  float: right;
+  line-height: 24px !important;
+}
+
 #mHeader:hover {
   color: #9e0b0f;
 }

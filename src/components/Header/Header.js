@@ -18,6 +18,7 @@ class Header extends Component {
   }
 
   render() {
+    let except = this.props.exceptions;
     return (
       <Navbar inverse collapseOnSelect className="header">
         <Navbar.Header>
@@ -31,12 +32,12 @@ class Header extends Component {
             <NavItem eventKey={1} onClick={() => this.handleSetDisplay()}>Melrose High School</NavItem>
             <NavItem eventKey={2} href="/test">Toggle Notifications</NavItem>
             <NavDropdown eventKey={3} title="Display Settings" id="display-settings">
-              <MenuItem onClick={() => this.handleSetDisplay('pageTitle')}>Title</MenuItem>
-              <MenuItem onClick={() => this.handleSetDisplay('schedule')}>Schedule</MenuItem>
-              <MenuItem onClick={() => this.handleSetDisplay('dayTimer')}>Day Timer</MenuItem>
-              <MenuItem onClick={() => this.handleSetDisplay('blockTimer')}>Block Timer</MenuItem>
-              <MenuItem onClick={() => this.handleSetDisplay('lunch')}>Lunch</MenuItem>
-              <MenuItem onClick={() => this.handleSetDisplay('announcements')}>Announcements</MenuItem>
+              <MenuItem onClick={() => this.handleSetDisplay('pageTitle')}>Title{except.pageTitle ? <i className="fa fa-check-square-o header-check-box" aria-hidden="true"></i> : <i className="fa fa-square-o header-check-box" aria-hidden="true"></i>}</MenuItem>
+              <MenuItem onClick={() => this.handleSetDisplay('schedule')}>Schedule{except.schedule ? <i className="fa fa-check-square-o header-check-box" aria-hidden="true"></i> : <i className="fa fa-square-o header-check-box" aria-hidden="true"></i>}</MenuItem>
+              <MenuItem onClick={() => this.handleSetDisplay('dayTimer')}>Day Timer{except.dayTimer ? <i className="fa fa-check-square-o header-check-box" aria-hidden="true"></i> : <i className="fa fa-square-o header-check-box" aria-hidden="true"></i>}</MenuItem>
+              <MenuItem onClick={() => this.handleSetDisplay('blockTimer')}>Block Timer{except.blockTimer ? <i className="fa fa-check-square-o header-check-box" aria-hidden="true"></i> : <i className="fa fa-square-o header-check-box" aria-hidden="true"></i>}</MenuItem>
+              <MenuItem onClick={() => this.handleSetDisplay('lunch')}>Lunch{except.lunch ? <i className="fa fa-check-square-o header-check-box" aria-hidden="true"></i> : <i className="fa fa-square-o header-check-box" aria-hidden="true"></i>}</MenuItem>
+              <MenuItem onClick={() => this.handleSetDisplay('announcements')}>Announcements{except.announcements ? <i className="fa fa-check-square-o header-check-box" aria-hidden="true"></i> : <i className="fa fa-square-o header-check-box" aria-hidden="true"></i>}</MenuItem>
             </NavDropdown>
           </Nav>
         </Navbar.Collapse>
