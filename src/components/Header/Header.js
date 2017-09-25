@@ -23,7 +23,7 @@ class Header extends Component {
       <Navbar inverse collapseOnSelect className="header">
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/test">Aspen-Dash</a>
+            <a href="/test" className="header-m">{this.props.loaded ? 'M' : <span className="glyphicon glyphicon-refresh spinning"/>}</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>

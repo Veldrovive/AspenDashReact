@@ -21,10 +21,10 @@ class App extends Component {
   // state = {}
   constructor(props){
     super(props);
-    this.state = {schedule: null, currentBlock: null, dayNumber: null, asOf: 0, displayExceptions: {}};
+    this.state = {aspenLoaded: false, schedule: null, currentBlock: null, dayNumber: null, asOf: 0, displayExceptions: {}};
     this.getAspenInfo()
       .then(res => {
-        this.setState({asOf: res.asOf, schedule: res.schedule.blockSchedule, currentBlock: res.schedule.block, dayNumber: res.schedule.day, announcements: res.announcements.hs})
+        this.setState({aspenLoaded: true, asOf: res.asOf, schedule: res.schedule.blockSchedule, currentBlock: res.schedule.block, dayNumber: res.schedule.day, announcements: res.announcements.hs})
       });
     this.getDisplayExceptions = this.getDisplayExceptions.bind(this);
     this.setDisplayException = this.setDisplayException.bind(this);
@@ -115,7 +115,7 @@ class App extends Component {
     if(colDisplayed === 3) size = 4;
     return (
       <div className="main-container">
-        <Header setDisplay={this.toggleDisplayException} exceptions={this.state.displayExceptions}/>
+        <Header loaded={this.state.aspenLoaded} setDisplay={this.toggleDisplayException} exceptions={this.state.displayExceptions}/>
         <div className="mainInfoWrapper">
           {this.state.displayExceptions.pageTitle ?
             <PageTitle dayNumber={this.state.dayNumber} asOf={this.state.asOf}/>
