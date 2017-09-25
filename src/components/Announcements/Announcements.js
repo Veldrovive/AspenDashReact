@@ -38,12 +38,14 @@ export default class Announcements extends Component{
   }
 
   startCycle(){
-    this.setAnnouncement(0);
-    this.startBarCycle();
-    const index = setInterval(() => {
-      this.setAnnouncement(this.state.announcementIndex + 1);
-    }, this.props.cycleTime);
-    this.setState({cycleIndex: index, paused: false});
+    if(this.props.announcements.length > 0) {
+      this.setAnnouncement(0);
+      this.startBarCycle();
+      const index = setInterval(() => {
+        this.setAnnouncement(this.state.announcementIndex + 1);
+      }, this.props.cycleTime);
+      this.setState({cycleIndex: index, paused: false});
+    }
   }
 
   pauseCycle(){

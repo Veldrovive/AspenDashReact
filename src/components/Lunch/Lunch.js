@@ -6,20 +6,22 @@ import './Lunch.css';
 export default class Lunch extends Component{
   constructor(){
     super();
-    this.state = {special: 'Loading...'};
+    this.state = {special: 'Loading...', loaded: false};
   }
 
   componentDidMount(){
     this.getLunchInfo();
-    setInterval(this.getLunchInfo(), 600000);
+    if(this.state.loaded !== true) {
+      setInterval(this.getLunchInfo(), 600000);
+    }
   }
 
   getLunchInfo(){
     request.get('https://melroseschools.nutrislice.com/menu/api/weeks/school/melrose/menu-type/lunch/'+new Date().getFullYear()+'/00/00/?format=json', (err, res, body) => {
       body = JSON.parse(body);
-      const lunch = body.days[new Date().getDay()].menu_items[1].food.name;
-      if(typeof lunch !== 'undefined'){
-        this.setState({special: lunch});
+      const item = body.days[new Date().getDay()].menu_items[1];
+      if(typeof item !== 'undefined'){
+        this.setState({special: item.food.name, loaded: true});
       }else{
         this.setState({special: 'No Lunch Served'});
       }

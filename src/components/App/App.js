@@ -94,7 +94,12 @@ class App extends Component {
   getAspenInfo(){
     return new Promise(resolve => {
       request.get('https://mhs-aspencheck-serve.herokuapp.com/', (err, res, body) => {
-        resolve(JSON.parse(body));
+        try{
+          const res = JSON.parse(body);
+          resolve(res);
+        }catch(err){
+          resolve({asOf: new Date().getTime(), schedule: {blockSchedule: [], currentBlock: 'Z', day: 0}, announcements: {hs: []}});
+        }
       })
     });
   }
