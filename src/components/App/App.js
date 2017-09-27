@@ -16,9 +16,6 @@ import './App.css';
 
 
 class App extends Component {
-  // static propTypes = {}
-  // static defaultProps = {}
-  // state = {}
   constructor(props){
     super(props);
     this.state = {aspenLoaded: false, schedule: null, currentBlock: null, dayNumber: null, asOf: 0, displayExceptions: {}};
@@ -37,15 +34,19 @@ class App extends Component {
   }
 
   getDisplayExceptions(){
-    const loadedState = loadState();
+    let loadedState = loadState();
     if(typeof loadedState === 'object') {
       this.setState({displayExceptions: loadedState});
     }else{
-      let defaultDisplay = {pageTitle: true, schedule: true, dayTimer: true, blockTimer: true, lunch: true, announcements: true};
-      this.setState({displayExceptions: defaultDisplay});
+      let defaultDisplay = {pageTitle: true, schedule: true, dayTimer: true, blockTimer: true, lunch: true, announcements: true, header: true};
+      loadedState = defaultDisplay;
       saveState(defaultDisplay);
     }
-    setTimeout(this.getQueryStringOverrides(), 1000);
+    const overrides = this.getQueryStringOverrides() || [];
+    overrides.forEach(override => {
+      loadedState[override] = false;
+    });
+    this.setState({displayExceptions: loadedState});
   }
 
   setDisplayException(id, value){
@@ -66,13 +67,10 @@ class App extends Component {
       return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    console.log("The value of hideSchedule is: ",getParameterByName('hideSchedule'));
-
-    if(getParameterByName('hideSchedule') === 'true'){
-      let newExceptions = this.state.displayExceptions;
-      newExceptions.schedule = false;
-      console.log("Setting exceptions to: ",newExceptions);
-      this.setState({displayExceptions: newExceptions});
+    try{
+      return JSON.parse(getParameterByName('displayOverrides'));
+    }catch(err){
+      return [];
     }
   }
 
@@ -115,7 +113,11 @@ class App extends Component {
     if(colDisplayed === 3) size = 4;
     return (
       <div className="main-container">
-        <Header loaded={this.state.aspenLoaded} setDisplay={this.toggleDisplayException} exceptions={this.state.displayExceptions}/>
+        {this.state.displayExceptions.header ?
+          <Header loaded={this.state.aspenLoaded} setDisplay={this.toggleDisplayException} exceptions={this.state.displayExceptions}/>
+          :
+          <div/>
+        }
         <div className="mainInfoWrapper">
           {this.state.displayExceptions.pageTitle ?
             <PageTitle dayNumber={this.state.dayNumber} asOf={this.state.asOf}/>

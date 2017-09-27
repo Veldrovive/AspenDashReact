@@ -19,6 +19,7 @@ export default class Lunch extends Component{
   getLunchInfo(){
     request.get('https://melroseschools.nutrislice.com/menu/api/weeks/school/melrose/menu-type/lunch/'+new Date().getFullYear()+'/00/00/?format=json', (err, res, body) => {
       body = JSON.parse(body);
+      //TODO: Fix when no internet
       const item = body.days[new Date().getDay()].menu_items[1];
       if(typeof item !== 'undefined'){
         this.setState({special: item.food.name, loaded: true});

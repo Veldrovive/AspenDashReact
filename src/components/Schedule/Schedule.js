@@ -49,7 +49,7 @@ export default class Schedule extends Component{
   }
 
   startCounter(){
-    const start = new Date().setHours(7, 45);
+    const start = new Date().setHours(7, 45); //TODO: make this dynamic
     const end = new Date().setHours(14, 11);
     const startPercent = (new Date()-start)/(end - start)*100;
     this.setState({percent: startPercent});
@@ -70,6 +70,5 @@ export default class Schedule extends Component{
         <ProgressBar active bsStyle="danger" now={barPercent} label={`${barPercent}%`}/>
       </Panel>
     )
-
   }
 }

@@ -11,10 +11,10 @@ export default class Title extends Component{
       const date = new Date(this.props.asOf * 1000);
       m = moment(date).format('h:mm:ss a');
     }else{
-      m = "Loading";
+      m = "";
     }
     return(
-      <PageHeader>Day {this.props.dayNumber} Information <small className="smallText">{m}</small></PageHeader>
+      <PageHeader>Day {this.props.dayNumber !== null ? `${this.props.dayNumber}'s ` : ' '}Information <small className="smallText">{m}</small></PageHeader>
     )
   }
 }
