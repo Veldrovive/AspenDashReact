@@ -22,7 +22,17 @@
   margin: 0 10% 0 10%;
 }
 
+.panel-heading{
+  font-weight: bold;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@media only screen and (min-width: 1600px){
+  .mainInfoWrapper{
+    font-size: 1vw !important;
+  }
 }

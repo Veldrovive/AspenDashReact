@@ -118,7 +118,7 @@ export default class Announcements extends Component{
     return(
       <div className="panel panel-danger announcements">
         <div className="panel-heading announcements-heading">
-          <h3 className="panel-title announcements-title">Announcements <small className="announcements-index">{announcementIndex}</small></h3>
+          <div className="panel-heading">Announcements <small className="announcements-index">{announcementIndex}</small></div>
           <div className="announcements-buttons-container">
             <div className="announcement-button arrow-icon" onClick={this.decrementAnnouncement}>
               <i className="fa fa-arrow-left"></i>

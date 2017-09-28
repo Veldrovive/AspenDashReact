@@ -9,7 +9,7 @@ export default class Title extends Component{
     let m;
     if(this.props.asOf !== 0) {
       const date = new Date(this.props.asOf * 1000);
-      m = moment(date).format('h:mm:ss a');
+      m = moment(date).format('h:mm a');
     }else{
       m = "";
     }
