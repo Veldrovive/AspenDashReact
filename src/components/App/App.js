@@ -18,7 +18,7 @@ import './App.css';
 class App extends Component {
   constructor(props){
     super(props);
-    this.state = {aspenLoaded: false, schedule: null, currentBlock: null, dayNumber: null, asOf: 0, displayExceptions: {}};
+    this.state = {aspenLoaded: false, schedule: null, currentBlock: null, dayNumber: null, asOf: 0, displayExceptions: {}, hideCursor: false};
     this.getAspenInfo()
       .then(res => {
         this.setState({aspenLoaded: true, asOf: res.asOf, schedule: res.schedule.blockSchedule, currentBlock: res.schedule.block, dayNumber: res.schedule.day, announcements: res.announcements.hs})
@@ -27,10 +27,12 @@ class App extends Component {
     this.setDisplayException = this.setDisplayException.bind(this);
     this.toggleDisplayException = this.toggleDisplayException.bind(this);
     this.getQueryStringOverrides = this.getQueryStringOverrides.bind(this);
+    this.hideCursor = this.hideCursor.bind(this);
   }
 
   componentDidMount(){
     this.getDisplayExceptions();
+    this.hideCursor();
   }
 
   getDisplayExceptions(){
@@ -56,21 +58,28 @@ class App extends Component {
     saveState(this.state.displayExceptions);
   }
 
-  getQueryStringOverrides(){
-    function getParameterByName(name, url) {
-      if (!url) url = window.location.href;
-      name = name.replace(/[\[\]]/g, "\\$&");
-      let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-      if (!results) return null;
-      if (!results[2]) return '';
-      return decodeURIComponent(results[2].replace(/\+/g, " "));
-    }
+  getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    let regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+  }
 
+  getQueryStringOverrides(){
     try{
-      return JSON.parse(getParameterByName('displayOverrides'));
+      return JSON.parse(this.getParameterByName('displayOverrides'));
     }catch(err){
       return [];
+    }
+  }
+
+  hideCursor(){
+    if(this.getParameterByName('hideCursor') === 'true'){
+      console.log("Hiding Cursor");
+      this.setState({hideCursor: true});
     }
   }
 
@@ -111,8 +120,9 @@ class App extends Component {
     if(colDisplayed === 1) size = 12;
     if(colDisplayed === 2) size = 6;
     if(colDisplayed === 3) size = 4;
+    console.log("Cursor value: ",this.state.hideCursor);
     return (
-      <div className="main-container">
+      <div className={this.state.hideCursor ? "main-container no-cursor" : "main-container"}>
         {this.state.displayExceptions.header ?
           <Header loaded={this.state.aspenLoaded} setDisplay={this.toggleDisplayException} exceptions={this.state.displayExceptions}/>
           :
