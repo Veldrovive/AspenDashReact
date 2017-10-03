@@ -5139,6 +5139,7 @@ a.thumbnail.active {
   float: left;
   width: 0;
   height: 100%;
+  font-size: .7em;
   line-height: 20px;
   color: #fff;
   text-align: center;
