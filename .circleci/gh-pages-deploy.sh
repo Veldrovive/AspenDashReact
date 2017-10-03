@@ -1,5 +1,7 @@
 #!/bin/bash -ex
 
+echo "Running from $(PWD)"
+
 # Setup git so we can use it
 git config user.name "CircleCI Deploy script"
 
@@ -11,7 +13,7 @@ git fetch origin master
 git reset --hard origin/master
 
 # Move .gitignore out of the way so we can add build/
-mv .gitignore .gitignore.bak
+mv '.gitignore' '.gitignore.bak'
 git add build/
 
 # Commit and push
