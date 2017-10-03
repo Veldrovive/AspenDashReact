@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import './arrayFunction';
 import App from './components/App/App';
 import './fontAwesome/css/font-awesome.min.css'
 import './bootstrap/css/bootstrap.min.css';

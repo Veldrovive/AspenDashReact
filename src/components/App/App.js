@@ -21,7 +21,8 @@ class App extends Component {
     this.state = {aspenLoaded: false, schedule: null, currentBlock: null, dayNumber: null, asOf: 0, displayExceptions: {}, hideCursor: false};
     this.getAspenInfo()
       .then(res => {
-        this.setState({aspenLoaded: true, asOf: res.asOf, schedule: res.schedule.blockSchedule, currentBlock: res.schedule.block, dayNumber: res.schedule.day, announcements: res.announcements.hs})
+        this.setState({aspenLoaded: true, asOf: res.asOf, schedule: res.schedule.blockSchedule, currentBlock: res.schedule.block, dayNumber: res.schedule.day, announcements: res.announcements.hs});
+        setInterval(this.getAspenInfo, 60000);
       });
     this.getDisplayExceptions = this.getDisplayExceptions.bind(this);
     this.setDisplayException = this.setDisplayException.bind(this);
@@ -78,7 +79,6 @@ class App extends Component {
 
   hideCursor(){
     if(this.getParameterByName('hideCursor') === 'true'){
-      console.log("Hiding Cursor");
       this.setState({hideCursor: true});
     }
   }
@@ -120,7 +120,6 @@ class App extends Component {
     if(colDisplayed === 1) size = 12;
     if(colDisplayed === 2) size = 6;
     if(colDisplayed === 3) size = 4;
-    console.log("Cursor value: ",this.state.hideCursor);
     return (
       <div className={this.state.hideCursor ? "main-container no-cursor" : "main-container"}>
         {this.state.displayExceptions.header ?

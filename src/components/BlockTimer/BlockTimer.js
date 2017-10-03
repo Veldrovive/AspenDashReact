@@ -110,13 +110,27 @@ export default class BlockTimer extends Component{
     clearInterval(this.state.intervalIndex);
   }
 
+  getNumberIndex(array, number){
+    array.forEach(number => {
+      if(typeof number !== "number"){
+        return false;
+      }
+    });
+    for(let i = 0; i < array.length; i++){
+      if(number < array[i]){
+        return i;
+      }
+    }
+    return false;
+  };
+
   startLoop(){
     const currentWeekDay = new Date().getDay();
     const currentPercent = ((new Date() - new Date().setHours(7, 45, 0, 0)) / (new Date().setHours(14, 11, 0, 0) - new Date().setHours(7, 45))) * 100;
     let nextEvent;
     let nextPercent;
     if(currentWeekDay === 2) {
-      const blockNumber = tuesdayAdvisoryPercents.getNumberIndex(currentPercent);
+      const blockNumber = this.getNumberIndex(tuesdayAdvisoryPercents, currentPercent);
       if(blockNumber !== false) {
         nextEvent = tuesdayAdvisoryClasses[blockNumber];
         nextPercent = tuesdayAdvisoryPercents[blockNumber];
@@ -125,7 +139,7 @@ export default class BlockTimer extends Component{
         nextPercent = 100;
       }
     }else if(currentWeekDay === 4) {
-      const blockNumber = thursdayAdvisoryPercents.getNumberIndex(currentPercent);
+      const blockNumber = this.getNumberIndex(thursdayAdvisoryPercents, currentPercent);
       if(blockNumber !== false) {
         nextEvent = thursdayAdvisoryClasses[blockNumber];
         nextPercent = thursdayAdvisoryPercents[blockNumber];
@@ -134,7 +148,7 @@ export default class BlockTimer extends Component{
         nextPercent = 100;
       }
     }else{
-      const blockNumber = regularDayPercents.getNumberIndex(currentPercent);
+      const blockNumber = this.getNumberIndex(regularDayPercents, currentPercent);
       if(blockNumber !== false) {
         nextEvent = regularDayClasses[blockNumber];
         nextPercent = regularDayPercents[blockNumber];

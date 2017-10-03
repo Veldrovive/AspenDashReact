@@ -31,7 +31,7 @@
 .progress{
   margin: 0 !important;
   border-radius: 0 !important;
-  font-size: 1em !important;
+  font-size: .7em !important;
 }
 
 @media only screen and (max-width: 500px) {
