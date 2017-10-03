@@ -1,9 +1,7 @@
 #!/bin/bash -ex
 
-echo "Running from $PWD"
-
 # Setup git so we can use it
-git config --global user.name "CircleCI Deploy script"
+git config user.name "CircleCI Deploy script"
 
 # Reset Everything
 git checkout -f
