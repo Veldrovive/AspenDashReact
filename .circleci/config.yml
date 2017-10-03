@@ -37,6 +37,6 @@ jobs:
       - run: timeout 10s npm test || echo "Facebook needs to fix https://github.com/facebookincubator/create-react-app/issues/3147"
       - deploy:
                 name: Maybe Deploy
-                command: "npm run build && cd .circleci && ./gh-pages-deploy.sh"
+                command: "CI="" npm run build && cd .circleci && ./gh-pages-deploy.sh"
 
 
