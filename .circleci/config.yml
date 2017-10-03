@@ -35,5 +35,8 @@ jobs:
 
       # run tests!
       - run: npm test
+      - deploy:
+                name: Maybe Deploy
+                command: "npm run build && cd .circleci && ./gh-pages-deploy.sh"
 
 
