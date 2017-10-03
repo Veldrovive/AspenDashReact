@@ -4,6 +4,7 @@ echo "Running from $(pwd)"
 
 # Setup git so we can use it
 git config user.name "CircleCI Deploy script"
+git config user.email "autodeploy@circle.ci"
 
 # Reset Everything
 git checkout -f
