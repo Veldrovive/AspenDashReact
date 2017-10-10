@@ -51,7 +51,6 @@ export default class Schedule extends Component{
   startCounter(){
     const start = new Date().setHours(7, 45); //TODO: make this dynamic
     const end = new Date().setHours(14, 11);
-    const dayNumber = new Date().getDay();
     const startPercent = (new Date()-start)/(end - start)*100;
     this.setState({percent: startPercent});
     const interval = setInterval(() => {
@@ -63,8 +62,7 @@ export default class Schedule extends Component{
   }
 
   render(){
-    let barPercent;
-    this.state.percent > 100 ? barPercent = 100 : barPercent = Math.round(this.state.percent);
+    const barPercent = this.state.percent > 100 ? 100 : Math.round(this.state.percent);
     return(
       <Panel header="Schedule" bsStyle="danger">
         <div className="schedule-panel">
